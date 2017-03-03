@@ -1,4 +1,34 @@
-<h1 class="test">
-  {{title}}
-</h1>
-<router-outlet></router-outlet>
+<div class="container">
+
+  <h1 class="test">{{title}}</h1>
+  <p class="lead">Corporate/Intranet SPA with Angular2 with ASP.NET Core</p>
+
+  <router-outlet></router-outlet>
+
+  <hr>
+
+  <h3>Some content in a bootstrap grid</h3>
+  <p>Get two columns <strong>starting at desktops and scaling to large desktops</strong>.</p>
+  <div class="row">
+    <div class="col-md-8">
+      The purpose of this repository is to document the steps involved in building a 'Single Page Application' using Angular2 and
+      ASP.NET. This project uses the latest versions of Angular2 and ASP.NET Core. It is designed to be deployed to an IIS
+      Server running on a corporate network (with Active Directory).
+    </div>
+    <div class="col-md-4">
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary" id="dropdownMenu1" ngbDropdownToggle>
+        Bootstrap 4 Test!
+      </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <button class="dropdown-item">Action 1</button>
+          <button class="dropdown-item">Action 2</button>
+          <button class="dropdown-item">Action 3</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+</div>
