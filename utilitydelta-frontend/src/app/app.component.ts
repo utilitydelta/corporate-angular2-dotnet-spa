@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'UtilityDelta Frontend Hello World!';
+
+  clickNavigation() {
+    this.title = "Navigation clicked";
+  }
 }
