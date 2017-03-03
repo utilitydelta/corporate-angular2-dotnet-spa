@@ -7,8 +7,8 @@ describe('utilitydelta-frontend App', () => {
     page = new UtilitydeltaFrontendPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should display message saying UtilityDelta Frontend Hello World', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getParagraphText()).toEqual('UtilityDelta Frontend Hello World!');
   });
 });
