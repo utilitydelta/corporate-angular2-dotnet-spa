@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "Microsoft.AspNetCore.Identity": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.1",
     "Microsoft.AspNetCore.Routing": "1.0.1",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
@@ -20,6 +21,7 @@
 
   "frameworks": {
     "net462": {
+    
     }
   },
 
@@ -44,6 +46,8 @@
   },
 
   "scripts": {
-    "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
+    "postpublish": [
+      "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%"
+    ]
   }
 }
