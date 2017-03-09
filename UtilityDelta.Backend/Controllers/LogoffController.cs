@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Antiforgery;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +7,6 @@ using UtilityDelta.Backend.Identity;
 
 namespace UtilityDelta.Backend.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     public class LogoffController
     {
@@ -26,9 +24,8 @@ namespace UtilityDelta.Backend.Controllers
             m_signInManager = signInManager;
         }
 
-        [HttpGet]
-        [ValidateAntiForgeryToken]
-        public async Task<string> Get()
+        [HttpPost]
+        public async Task<string> Post()
         {
             await m_signInManager.SignOutAsync();
 

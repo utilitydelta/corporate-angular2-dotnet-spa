@@ -40,7 +40,7 @@ namespace UtilityDelta.Backend.Identity
         }
 
         /// <summary>
-        ///     TODO: Used when logging in with username
+        ///     Used when logging in with username
         /// </summary>
         /// <param name="normalizedUserName"></param>
         /// <param name="cancellationToken"></param>
@@ -67,11 +67,23 @@ namespace UtilityDelta.Backend.Identity
             return await Task.Run(() => Admin.PasswordHash);
         }
 
+        /// <summary>
+        ///     Used after successfull login with username and password to get 'user id'
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<string> GetUserIdAsync(User user, CancellationToken cancellationToken)
         {
             return await Task.Run(() => Admin.Username);
         }
 
+        /// <summary>
+        ///     Used after login to get username for the logged in user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<string> GetUserNameAsync(User user, CancellationToken cancellationToken)
         {
             return await Task.Run(() => Admin.Username);

@@ -15,7 +15,15 @@ export class AppComponent {
   constructor(private http: Http) { }
 
   login() {
-    this.http.get(`api/login?username=admin&password=password`)
+    const body = JSON.stringify(
+      {
+        Username: 'admin',
+        Password: 'password'
+      });
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers });
+
+    this.http.post('api/login', body, options)
       .toPromise()
       .then(response => response.json() as any)
       .catch(this.handleError)
@@ -24,7 +32,9 @@ export class AppComponent {
       });
   }
   logoff() {
-    this.http.get(`api/logoff`)
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers });
+    this.http.post('api/logoff', null, options)
       .toPromise()
       // .then(response => response.json() as any)
       .catch(this.handleError)

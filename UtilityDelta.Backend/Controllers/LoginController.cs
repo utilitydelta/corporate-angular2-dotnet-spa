@@ -36,14 +36,12 @@ namespace UtilityDelta.Backend.Controllers
         /// <summary>
         ///     Try using username: "admin" with password "password"
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
+        /// <param name="data"></param>
         /// <returns></returns>
-        [HttpGet]
-        [ValidateAntiForgeryToken]
-        public async Task<SignInResult> Get(string username, string password)
+        [HttpPost]
+        public async Task<SignInResult> Post([FromBody] LoginData data)
         {
-            var result = await m_signInManager.PasswordSignInAsync(username, password, true, false);
+            var result = await m_signInManager.PasswordSignInAsync(data.Username, data.Password, true, false);
 
             if (result.Succeeded)
             {
@@ -51,7 +49,7 @@ namespace UtilityDelta.Backend.Controllers
                 //https://github.com/aspnet/Antiforgery/issues/93
 
                 //Update the user so we know who to generate the token for
-                var user = await m_userManager.FindByIdAsync(username);
+                var user = await m_userManager.FindByIdAsync(data.Username);
                 m_httpContextAccessor.HttpContext.User = await m_userClaimsPrincipalFactory.CreateAsync(user);
 
                 //Update the token based on the newly logged in user
@@ -62,6 +60,12 @@ namespace UtilityDelta.Backend.Controllers
             }
 
             return result;
+        }
+
+        public class LoginData
+        {
+            public string Password { get; set; }
+            public string Username { get; set; }
         }
     }
 }
