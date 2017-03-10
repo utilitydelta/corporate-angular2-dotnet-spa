@@ -24,27 +24,31 @@ export class LoginGuard implements CanActivate {
       return true;
     } else if (this.currentUserService.initialApplicationStart) {
       this.currentUserService.initialApplicationStart = false;
-      //TODO: make a call to backend to get username
-      this.http.get(`api/CurrentUser`)
+      // make a call to backend to get username
+      return this.http.get(`api/CurrentUser`)
         .toPromise()
         .then(response => {
           return response.json() as any;
         })
-        .catch((error: any) => {
-          this.redirectToLogin(state.url);
-        })
+        .catch(this.handleError)
         .then((value: any) => {
           if (value.username != null) {
             this.currentUserService.login(value.username);
-            this.router.navigate(['/']);
+            return true;
           } else {
             this.redirectToLogin(state.url);
+            return false;
           }
         });
     } else {
       this.redirectToLogin(state.url);
+      return false;
     }
-    return false;
+  }
+
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error); // for demo purposes only
+    return Promise.reject(error.message || error);
   }
 
   private redirectToLogin(returnToUrl: string) {
