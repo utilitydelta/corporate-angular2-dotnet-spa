@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace UtilityDelta.Backend.Controllers
@@ -10,14 +11,14 @@ namespace UtilityDelta.Backend.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new[] {"value1", "value2"};
-        }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value" + id;
+            var randomSeed = new Random(DateTime.UtcNow.Second);
+            var iterations = randomSeed.Next(50);
+            var data = new string[iterations];
+            for (var i = 0; i < iterations; i++)
+            {
+                data[i] = randomSeed.Next(5000, 10000).ToString();
+            }
+            return data;
         }
     }
 }
