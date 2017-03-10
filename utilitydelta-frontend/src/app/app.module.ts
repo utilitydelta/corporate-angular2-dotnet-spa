@@ -8,6 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { LoginGuard } from './login.guard';
+import { CurrentUserService } from './current-user.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,10 @@ import { HomeComponent } from './home/home.component';
     AppRoutingModule,
     NgbModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    LoginGuard,
+    CurrentUserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

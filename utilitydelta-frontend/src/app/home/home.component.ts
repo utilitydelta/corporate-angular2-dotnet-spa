@@ -9,7 +9,7 @@ import 'rxjs/add/operator/toPromise';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  data:string[]
+  data: string[] = [];
 
   constructor(private http: Http) { }
 
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   }
 
   public clicked(actionName: string): void {
-    
+
     this.http.get(`api/${actionName}`)
       .toPromise()
       .then(response => response.json() as string[])

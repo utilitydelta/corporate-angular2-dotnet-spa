@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // Testing HTTP calls to backend imports
 import { Headers, Http, RequestOptions, RequestMethod, Request } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+import { CurrentUserService } from '../current-user.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import 'rxjs/add/operator/toPromise';
 export class LoginComponent implements OnInit {
   title = '';
 
-  constructor(private http: Http) { }
+  constructor(private currentUserService: CurrentUserService, private http: Http) { }
 
   ngOnInit() {
   }
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
       .then(response => response.json() as any)
       .catch(this.handleError)
       .then((value: any) => {
+        this.currentUserService.login('admin');
         this.title = 'logged in!';
       });
   }
@@ -41,6 +43,7 @@ export class LoginComponent implements OnInit {
       // .then(response => response.json() as any)
       .catch(this.handleError)
       .then(() => {
+        this.currentUserService.logout();
         this.title = 'logged off!';
       });
   }
