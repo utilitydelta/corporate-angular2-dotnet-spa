@@ -25,7 +25,7 @@ namespace UtilityDelta.Backend.Controllers
         }
 
         [HttpPost]
-        public async Task<string> Post()
+        public async Task<bool> Post()
         {
             await m_signInManager.SignOutAsync();
 
@@ -34,12 +34,11 @@ namespace UtilityDelta.Backend.Controllers
 
             //Remove the user as we are logging off
             m_httpContextAccessor.HttpContext.User = null;
-
             //Now generate a new token
             var tokens = m_antiforgery.GetAndStoreTokens(m_httpContextAccessor.HttpContext);
             m_httpContextAccessor.HttpContext.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken);
 
-            return "Signed out!";
+            return true;
         }
     }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-// Testing HTTP calls to backend imports
-import { Headers, Http, RequestOptions, RequestMethod, Request } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
+
 import { CurrentUserService } from '../current-user.service';
+import { BackendCommsService } from '../backend-comms.service';
+import { SignInResult } from '../BackendDto/SignInResult';
 
 @Component({
   selector: 'app-login',
@@ -12,43 +12,38 @@ import { CurrentUserService } from '../current-user.service';
 export class LoginComponent implements OnInit {
   title = '';
 
-  constructor(private currentUserService: CurrentUserService, private http: Http) { }
+  constructor(
+    private currentUserService: CurrentUserService,
+    private backendCommsService: BackendCommsService) { }
 
   ngOnInit() {
   }
 
   login() {
-    const body = JSON.stringify(
-      {
-        Username: 'admin',
-        Password: 'password'
+    const data = {
+      username: 'admin',
+      password: 'password'
+    };
+    this.backendCommsService.post<SignInResult>('login', data)
+      .then((value: SignInResult) => {
+        if (value.succeeded) {
+          this.currentUserService.login(data.username);
+          this.title = `logged in as ${data.username}.`;
+        } else {
+          this.title = `Failed to log in.`;
+        }
       });
-    const headers = new Headers({ 'Content-Type': 'application/json' });
-    const options = new RequestOptions({ headers: headers });
+  }
 
-    this.http.post('api/login', body, options)
-      .toPromise()
-      .then(response => response.json() as any)
-      .catch(this.handleError)
-      .then((value: any) => {
-        this.currentUserService.login('admin');
-        this.title = 'logged in!';
-      });
-  }
   logoff() {
-    const headers = new Headers({ 'Content-Type': 'application/json' });
-    const options = new RequestOptions({ headers: headers });
-    this.http.post('api/logoff', null, options)
-      .toPromise()
-      // .then(response => response.json() as any)
-      .catch(this.handleError)
-      .then(() => {
-        this.currentUserService.logout();
-        this.title = 'logged off!';
+    this.backendCommsService.post<any>('logoff', null)
+      .then((result: boolean) => {
+        if (result) {
+          this.currentUserService.logoff();
+          this.title = 'Logged off.';
+        } else {
+          this.title = 'Failed to log off';
+        }
       });
-  }
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
   }
 }

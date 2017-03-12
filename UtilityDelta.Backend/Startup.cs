@@ -29,7 +29,8 @@ namespace UtilityDelta.Backend
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IAntiforgery antiforgery, IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IAntiforgery antiforgery, IApplicationBuilder app, IHostingEnvironment env,
+            ILoggerFactory loggerFactory)
         {
             app.Use(next => context =>
             {
@@ -39,7 +40,8 @@ namespace UtilityDelta.Backend
                 {
                     // We can send the request token as a JavaScript-readable cookie, and Angular will use it by default.
                     var tokens = antiforgery.GetAndStoreTokens(context);
-                    context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions {HttpOnly = false});
+                    context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken,
+                        new CookieOptions {HttpOnly = false});
                 }
                 return next(context);
             });

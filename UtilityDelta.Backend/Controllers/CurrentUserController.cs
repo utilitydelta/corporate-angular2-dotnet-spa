@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Antiforgery;
 
 namespace UtilityDelta.Backend.Controllers
 {
@@ -14,14 +10,14 @@ namespace UtilityDelta.Backend.Controllers
     public class CurrentUserController
     {
         private readonly IHttpContextAccessor m_httpContextAccessor;
-        private IAntiforgery m_antiforgery;
+        private readonly IAntiforgery m_antiforgery;
 
         public CurrentUserController(IHttpContextAccessor http, IAntiforgery antiforgery)
         {
             m_antiforgery = antiforgery;
             m_httpContextAccessor = http;
         }
-        
+
         [HttpGet]
         public dynamic Get()
         {

@@ -14,6 +14,28 @@ namespace UtilityDelta.Backend.Identity
             PasswordHash = "AQAAAAEAACcQAAAAEKbGOP6gyiR+tQVSnAw4Ul2AA+XHvS376cJcyuLfMv7tuoNGFiQFP8RNvK0oIOiMgg=="
         };
 
+        /// <summary>
+        ///     Used to check password is correct when logging in
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<string> GetPasswordHashAsync(User user, CancellationToken cancellationToken)
+        {
+            //this is the hash for the string: "password"
+            return await Task.Run(() => Admin.PasswordHash);
+        }
+
+        public Task<bool> HasPasswordAsync(User user, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SetPasswordHashAsync(User user, string passwordHash, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IdentityResult> CreateAsync(User user, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
@@ -56,18 +78,6 @@ namespace UtilityDelta.Backend.Identity
         }
 
         /// <summary>
-        ///     Used to check password is correct when logging in
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task<string> GetPasswordHashAsync(User user, CancellationToken cancellationToken)
-        {
-            //this is the hash for the string: "password"
-            return await Task.Run(() => Admin.PasswordHash);
-        }
-
-        /// <summary>
         ///     Used after successfull login with username and password to get 'user id'
         /// </summary>
         /// <param name="user"></param>
@@ -89,17 +99,7 @@ namespace UtilityDelta.Backend.Identity
             return await Task.Run(() => Admin.Username);
         }
 
-        public Task<bool> HasPasswordAsync(User user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task SetNormalizedUserNameAsync(User user, string normalizedName, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetPasswordHashAsync(User user, string passwordHash, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

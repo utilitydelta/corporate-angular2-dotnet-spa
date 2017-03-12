@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { LoginGuard } from './login.guard';
 import { CurrentUserService } from './current-user.service';
+import { BackendCommsService } from './backend-comms.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CurrentUserService } from './current-user.service';
   ],
   providers: [
     LoginGuard,
-    CurrentUserService
+    CurrentUserService,
+    BackendCommsService
   ],
   bootstrap: [AppComponent]
 })

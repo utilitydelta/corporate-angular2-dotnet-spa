@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-// Testing HTTP calls to backend imports
-import { Headers, Http, RequestOptions, RequestMethod, Request } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
+
+import { BackendCommsService } from '../backend-comms.service';
 
 @Component({
   selector: 'app-home',
@@ -11,28 +10,19 @@ import 'rxjs/add/operator/toPromise';
 export class HomeComponent implements OnInit {
   data: string[] = [];
 
-  constructor(private http: Http) { }
+  constructor(private backendCommsService: BackendCommsService) { }
 
   ngOnInit() {
   }
 
-  clickNavigation() {
-    this.clicked('values');
+  processClick() {
+    this.getDataFromAPI('values');
   }
 
-  public clicked(actionName: string): void {
-
-    this.http.get(`api/${actionName}`)
-      .toPromise()
-      .then(response => response.json() as string[])
-      .catch(this.handleError)
+  private getDataFromAPI(actionName: string): void {
+    this.backendCommsService.get<string[]>(actionName)
       .then((value: string[]) => {
         this.data = value;
       });
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
   }
 }

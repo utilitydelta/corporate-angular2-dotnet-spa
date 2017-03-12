@@ -2,18 +2,48 @@ import { Injectable } from '@angular/core';
 import {
   CanActivate,
   ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Router
+  RouterStateSnapshot
 } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { CurrentUserService } from './current-user.service';
-import { Headers, Http, RequestOptions, RequestMethod, Request } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
 
+import { CurrentUserService } from './current-user.service';
+import { CurrentUser } from './BackendDto/CurrentUser';
+import { BackendCommsService } from './backend-comms.service';
+
+  /**
+   * Ensure the user cannot navigate to any routes with
+   * this guard if they haven't logged in. The guard will
+   * instead send the user to the login screen.
+   */
 @Injectable()
 export class LoginGuard implements CanActivate {
-  constructor(private http: Http, private currentUserService: CurrentUserService, private router: Router) {
+  constructor(
+    private backendCommsService: BackendCommsService,
+    private currentUserService: CurrentUserService) {
 
+  }
+
+  /**
+   * The application has just loaded. The user may
+   * have still be logged in - so check the backend first
+   */
+  private checkIfLoggedIn(currentUrl: string): Promise<boolean> {
+    this.currentUserService.initialApplicationStart = false;
+    return this.backendCommsService
+      .get('CurrentUser')
+      .then((value: CurrentUser) => {
+        return this.processCurrentUser(value, currentUrl);
+      });
+  }
+
+  private processCurrentUser(dto: CurrentUser, currentUrl: string): boolean {
+    if (dto.username != null) {
+      this.currentUserService.login(dto.username);
+      return true;
+    } else {
+      this.currentUserService.redirectToLogin(currentUrl);
+      return false;
+    }
   }
 
   canActivate(
@@ -22,37 +52,13 @@ export class LoginGuard implements CanActivate {
 
     if (this.currentUserService.isLoggedIn) {
       return true;
-    } else if (this.currentUserService.initialApplicationStart) {
-      this.currentUserService.initialApplicationStart = false;
-      // make a call to backend to get username
-      return this.http.get(`api/CurrentUser`)
-        .toPromise()
-        .then(response => {
-          return response.json() as any;
-        })
-        .catch(this.handleError)
-        .then((value: any) => {
-          if (value.username != null) {
-            this.currentUserService.login(value.username);
-            return true;
-          } else {
-            this.redirectToLogin(state.url);
-            return false;
-          }
-        });
-    } else {
-      this.redirectToLogin(state.url);
-      return false;
     }
-  }
 
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
-  }
+    if (this.currentUserService.initialApplicationStart) {
+      return this.checkIfLoggedIn(state.url);
+    }
 
-  private redirectToLogin(returnToUrl: string) {
-    this.currentUserService.redirectUrl = returnToUrl;
-    this.router.navigate(['/login']);
+    this.currentUserService.redirectToLogin(state.url);
+    return false;
   }
 }

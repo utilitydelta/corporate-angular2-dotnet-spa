@@ -13,11 +13,11 @@ namespace UtilityDelta.Backend.Controllers
     [Route("api/[controller]")]
     public class LoginController
     {
-        private readonly IAntiforgery m_antiforgery;
-        private readonly IHttpContextAccessor m_httpContextAccessor;
-        private readonly SignInManager<User> m_signInManager;
-        private readonly IUserClaimsPrincipalFactory<User> m_userClaimsPrincipalFactory;
-        private readonly UserManager<User> m_userManager;
+        private readonly IAntiforgery _Antiforgery;
+        private readonly IHttpContextAccessor _HttpContextAccessor;
+        private readonly SignInManager<User> _SignInManager;
+        private readonly IUserClaimsPrincipalFactory<User> _UserClaimsPrincipalFactory;
+        private readonly UserManager<User> _UserManager;
 
         public LoginController(
             SignInManager<User> signInManager,
@@ -26,11 +26,11 @@ namespace UtilityDelta.Backend.Controllers
             IUserClaimsPrincipalFactory<User> claimsPrincipalFactory,
             IAntiforgery antiforgery)
         {
-            m_antiforgery = antiforgery;
-            m_userClaimsPrincipalFactory = claimsPrincipalFactory;
-            m_httpContextAccessor = http;
-            m_userManager = userManager;
-            m_signInManager = signInManager;
+            _Antiforgery = antiforgery;
+            _UserClaimsPrincipalFactory = claimsPrincipalFactory;
+            _HttpContextAccessor = http;
+            _UserManager = userManager;
+            _SignInManager = signInManager;
         }
 
         /// <summary>
@@ -41,22 +41,19 @@ namespace UtilityDelta.Backend.Controllers
         [HttpPost]
         public async Task<SignInResult> Post([FromBody] LoginData data)
         {
-            var result = await m_signInManager.PasswordSignInAsync(data.Username, data.Password, true, false);
+            var result = await _SignInManager.PasswordSignInAsync(data.Username, data.Password, true, false);
 
             if (result.Succeeded)
             {
                 //We must update the anti-forgery token as the token is bound to the logged in user
                 //https://github.com/aspnet/Antiforgery/issues/93
-
                 //Update the user so we know who to generate the token for
-                var user = await m_userManager.FindByIdAsync(data.Username);
-                m_httpContextAccessor.HttpContext.User = await m_userClaimsPrincipalFactory.CreateAsync(user);
-
+                var user = await _UserManager.FindByIdAsync(data.Username);
+                _HttpContextAccessor.HttpContext.User = await _UserClaimsPrincipalFactory.CreateAsync(user);
                 //Update the token based on the newly logged in user
-                var tokens = m_antiforgery.GetAndStoreTokens(m_httpContextAccessor.HttpContext);
-
+                var tokens = _Antiforgery.GetAndStoreTokens(_HttpContextAccessor.HttpContext);
                 //Make sure the client gets the updated token in the response cookie
-                m_httpContextAccessor.HttpContext.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken);
+                _HttpContextAccessor.HttpContext.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken);
             }
 
             return result;
