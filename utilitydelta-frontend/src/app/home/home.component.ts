@@ -35,6 +35,8 @@ export class HomeComponent implements OnInit {
           this.currentlyLoading = false;
         });
       this.currentUserService.initialApplicationStart = false;
+    } else {
+      this.currentlyLoading = false;
     }
   }
 
