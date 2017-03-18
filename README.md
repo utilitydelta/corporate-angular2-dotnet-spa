@@ -23,8 +23,7 @@ http://spa-angular2-dotnet-auth.azurewebsites.net
 
 * Make sure you have .NET Core tooling installed, Visual Studio 2015 Update 3, VS Code, Node.JS, Angular CLI
 * Fork the code and clone down to your machine. 
-* Open up UtilityDelta.Backend in VS and run it. Check that your browser opens http://localhost:[port]
-* Copy that URL. Open up the utilitydelta-frontend folder in VS Code. Paste that URL into the proxy.conf.json "target" field
+* Open up UtilityDelta.Backend in VS and run it. Check that your browser opens http://localhost:54216/
 *  Go to the terminal (Ctrl+~) and type 'npm install'. After the dependencies are installed, type 'npm start'. 
 * Open up http://localhost:4200 and login
 
