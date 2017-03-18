@@ -1,8 +1,99 @@
-<h3>UtilityDelta Frontend Hello World!</h3>
-<div class="row">
+<div class="row" *ngIf='!currentUserService.isLoggedIn && !currentlyLoading'>
   <div class="col-md-8">
-    <p>The purpose of this repository is to document the steps involved in building a 'Single Page Application' using Angular2
-      and ASP.NET vNext.</p>
+    <p>The purpose of this repository is to document the steps involved in building a 'Single Page Application' using Angular2 and ASP.NET. This project uses the latest versions of Angular2 and ASP.NET 6.</p>
+
+    <hr />
+    <h4 id="backend">Backend</h4>
+
+    <ul>
+    <li>It is designed to be deployed to an IIS Server with Windows OS. It uses the full .NET framework.</li>
+
+    <li>The project uses ASP.NET Identity. The user 'store' has been setup not to use the default EntityFramework implementation however. This allows you to plugin your own method for authentication (eg. Active Directory, External System, etc.)</li>
+
+    <li>The backend API is secured by default. Users must login to access data.</li>
+
+    <li>Any POST/PUT/DELETE calls to the backend check the Anti-forgery token to prevent CSRF.</li>
+    </ul>
+
+    <h4 id="frontend">Frontend</h4>
+
+    <ul>
+    <li>The frontend has bootstrap 4 with ng-bootstrap (no JQuery). Bootstrap is brought in via the SCSS source to allow overriding of styles, customisation without forking the code.</li>
+
+    <li>Angular2 uses the Angular2 CLI. This avoids us having to use webpack directly, simplifying the development &amp; build processes.</li>
+
+    <li>The frontend uses Angular2 routing, SASS for CSS preprocessor.</li>
+
+    <li>The build process moves the frontend code into the backend project for deployment to server.</li>
+    </ul>
+
+    <hr />
+
+    <h4 id="gettingstarted">Getting Started</h4>
+
+    <ul>
+    <li>Make sure you have .NET Core tooling installed, Visual Studio 2015 Update 3, VS Code, Node.JS, Angular CLI</li>
+
+    <li>Fork the code and clone down to your machine. </li>
+
+    <li>Open up UtilityDelta.Backend in VS and run it. Check that your browser opens http://localhost:[port]</li>
+
+    <li>Copy that URL. Open up the utilitydelta-frontend folder in VS Code. Paste that URL into the proxy.conf.json "target" field</li>
+
+    <li>Go to the terminal (Ctrl+~) and type 'npm install'. After the dependencies are installed, type 'npm start'. </li>
+
+    <li>Open up http://localhost:4200 and login with username 'admin' and password 'password'.</li>
+    </ul>
+
+    <hr />
+    <h4 id="debuggingthefrontendfromvscode">Debugging the Frontend From VS Code</h4>
+
+    <p>Install the 'Debugger for Chrome' extension for VS Code. Add the following to the target for the shortcut to open the Chrome browser:</p>
+
+    <p>--remote-debugging-port=9222</p>
+
+    <p>Run 'npm start' to start the server. Open up Google Chrome, navigate to the site: </p>
+
+    <p>http://localhost:4200/</p>
+
+    <p>You can now hit F5 in VS code and it should hit your breakpoints in *.ts files.</p>
+
+    <hr />
+
+    <h4 id="buildforproduction">Build for Production</h4>
+
+    <ul>
+    <li>You can test the process by running 'npm run build'</li>
+
+    <li>Results of the build go into the wwwroot in the ASP.NET project</li>
+
+    <li>You can then deploy the ASP.NET project</li>
+    <li>This process can also be used in a build server deployment process by using NodeJS on the build server and running the 'npm run build' command before building the .NET backend.</li>
+    </ul>
+  </div>
+  <div class="col-md-4">
+    <br />
+    <div class="form-group">
+      <label for="username">Username</label>
+			<input [(ngModel)]="username" id="username" type="text" class="form-control">
+		</div>
+		<div class="form-group">
+      <label for="password">Password</label>
+			<input [(ngModel)]="password" name="password" type="password" class="form-control">
+		</div>
+		<div class="checkbox">
+			<label>
+				<input [(ngModel)]="rememberMe" type="checkbox"> Remember Me
+			</label>
+		</div>
+    <button [ngClass]='loginClass' [disabled]='!loginEnabled' type="button" class="btn btn-block" (click)="login()">{{loginStatus}}</button>
+  </div>
+</div>
+<div class="row" *ngIf='currentUserService.isLoggedIn && !currentlyLoading'>
+  <div class="col-md-8">
+    <p>You are logged in as '{{currentUserService.currentUser}}'</p>
+    <p>The purpose of this project is to document the steps involved in building a 'Single Page Application' using Angular2
+      and ASP.NET 5.</p>
     <ul>
       <li *ngFor="let item of data">
         {{item}}
@@ -10,6 +101,6 @@
     </ul>
   </div>
   <div class="col-md-4">
-    <button class="btn btn-outline-primary" (click)="processClick()">List some data!</button>
+    <button class="btn btn-outline-primary" (click)="getSampleDataFromBackend()">List some data!</button>
   </div>
 </div>

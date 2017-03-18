@@ -41,7 +41,7 @@ namespace UtilityDelta.Backend.Controllers
         [HttpPost]
         public async Task<SignInResult> Post([FromBody] LoginData data)
         {
-            var result = await _SignInManager.PasswordSignInAsync(data.Username, data.Password, true, false);
+            var result = await _SignInManager.PasswordSignInAsync(data.Username, data.Password, data.RememberMe, false);
 
             if (result.Succeeded)
             {
@@ -63,6 +63,7 @@ namespace UtilityDelta.Backend.Controllers
         {
             public string Password { get; set; }
             public string Username { get; set; }
+            public bool RememberMe { get; set; }
         }
     }
 }

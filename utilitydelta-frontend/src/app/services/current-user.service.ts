@@ -26,6 +26,8 @@ export class CurrentUserService {
     if (this.redirectUrl) {
       this.router.navigate([this.redirectUrl]);
       this.redirectUrl = null;
+    } else {
+      this.router.navigate(['/']);
     }
   }
 
@@ -37,7 +39,7 @@ export class CurrentUserService {
     this.isLoggedIn = false;
     this.currentUser = null;
     this.redirectUrl = null;
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
 /**
@@ -45,6 +47,6 @@ export class CurrentUserService {
  */
   redirectToLogin(returnToUrl: string) {
     this.redirectUrl = returnToUrl;
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 }

@@ -1,0 +1,2 @@
+<p>This is a secure page. A route guard will stop users from getting here if they haven't logged in.</p>
+<button *ngIf='currentUserService.isLoggedIn' class="btn btn-outline-primary" (click)="logoff()">Log off here!</button>

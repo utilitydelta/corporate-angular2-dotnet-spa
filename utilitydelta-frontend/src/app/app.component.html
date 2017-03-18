@@ -1,17 +1,17 @@
 <div class="container">
 
   <h1 class="test">spa-angular2-dotnet-auth</h1>
-  <p class="lead">Corporate/Intranet SPA with Angular2 with ASP.NET Core</p>
+  <p class="lead">Single Page Application with Angular2, ASP.NET 6 and Identity</p>
 
   <ul class="nav nav-tabs">
     <li class="nav-item">
       <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/login" routerLinkActive="active">Authentication</a>
+      <a class="nav-link" routerLink="/securepage" routerLinkActive="active">Secure Page</a>
     </li>
   </ul>
 <br />
   <router-outlet></router-outlet>
-
+  <template ngbModalContainer></template>
 </div>

@@ -9,9 +9,6 @@ export class BackendCommsService {
 
   constructor(private http: Http) { }
 
-/**
- * Perform a GET request to the backend API
- */
   get<T>(endPoint: string): Promise<T> {
     return this.http.get(`${this.apiRoute}${endPoint}`)
       .toPromise()
