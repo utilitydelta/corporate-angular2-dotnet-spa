@@ -6,8 +6,7 @@ import { BackendCommsService } from '../services/backend-comms.service';
 import { CurrentUser } from '../dto/current-user';
 
 @Component({
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
 

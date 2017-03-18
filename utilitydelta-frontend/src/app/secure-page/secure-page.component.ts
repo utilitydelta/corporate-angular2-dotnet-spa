@@ -11,8 +11,7 @@ import { BackendCommsService } from '../services/backend-comms.service';
 import { SignInResult } from '../dto/sign-in-result';
 
 @Component({
-  templateUrl: './secure-page.component.html',
-  styleUrls: ['./secure-page.component.scss']
+  templateUrl: './secure-page.component.html'
 })
 export class SecurePageComponent implements OnInit {
 
