@@ -93,8 +93,6 @@
 <div class="row" *ngIf='currentUserService.isLoggedIn && !currentlyLoading'>
   <div class="col-md-8">
     <p>You are logged in as '{{currentUserService.currentUser}}'</p>
-    <p>The purpose of this project is to document the steps involved in building a 'Single Page Application' using Angular2
-      and ASP.NET 5.</p>
     <ul>
       <li *ngFor="let item of data">
         {{item}}
