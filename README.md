@@ -2,6 +2,9 @@
 
 The purpose of this repository is to document the steps involved in building a 'Single Page Application' using Angular2 and ASP.NET. This project uses the latest versions of Angular2 and ASP.NET 6.
 
+See a live demo here:
+http://spa-angular2-dotnet-auth.azurewebsites.net
+
 ------------------
 ### Backend
 * It is designed to be deployed to an IIS Server with Windows OS. It uses the full .NET framework.
