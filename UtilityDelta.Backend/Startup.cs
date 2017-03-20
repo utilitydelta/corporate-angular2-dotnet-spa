@@ -32,6 +32,8 @@ namespace UtilityDelta.Backend
         public void Configure(IAntiforgery antiforgery, IApplicationBuilder app, IHostingEnvironment env,
             ILoggerFactory loggerFactory)
         {
+            app.UseStatusCodePagesWithReExecute("/");
+
             app.Use(next => context =>
             {
                 if (
