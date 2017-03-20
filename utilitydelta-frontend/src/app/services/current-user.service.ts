@@ -26,8 +26,6 @@ export class CurrentUserService {
     if (this.redirectUrl) {
       this.router.navigate([this.redirectUrl]);
       this.redirectUrl = null;
-    } else {
-      this.router.navigate(['/']);
     }
   }
 
