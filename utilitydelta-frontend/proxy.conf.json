@@ -1,6 +1,6 @@
 {
-  "/api": {
-    "target": "http://localhost:54216/",
-    "changeOrigin": true
+    "/api": {
+      "target": "http://localhost:60783/",
+      "changeOrigin": true
+    }
   }
-}

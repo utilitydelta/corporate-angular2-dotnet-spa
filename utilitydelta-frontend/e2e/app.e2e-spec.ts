@@ -1,14 +1,14 @@
-import { UtilitydeltaFrontendPage } from './app.po';
+import { AppPage } from './app.po';
 
 describe('utilitydelta-frontend App', () => {
-  let page: UtilitydeltaFrontendPage;
+  let page: AppPage;
 
   beforeEach(() => {
-    page = new UtilitydeltaFrontendPage();
+    page = new AppPage();
   });
 
-  it('should display message saying UtilityDelta Frontend Hello World', () => {
+  it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('UtilityDelta Frontend Hello World!');
+    expect(page.getParagraphText()).toEqual('Welcome to app!');
   });
 });
